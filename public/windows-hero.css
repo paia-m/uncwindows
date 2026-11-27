@@ -111,23 +111,13 @@
 #contact .contact-grid { row-gap: 1.1rem; }
 .contact-info { grid-column: 1 / -1; }
 .contact-grid > .map { height: 100%; }
-#contact-form label:has(textarea) { grid-column: 1 / -1; }
+#contact-form .form-full { grid-column: 1 / -1; }
+.quote-intro h3 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
+.quote-intro p { margin: .5rem 0 0; color: var(--muted); }
 #contact-form textarea { width: 100%; }
-#contact-form .turnstile-preview, #contact-form button { grid-column: 1 / -1; justify-self: start; }
-.turnstile-preview {
-  display: flex;
-  align-items: center;
-  gap: .65rem;
-  width: min(300px, 100%);
-  min-height: 65px;
-  padding: .5rem .75rem;
-  border: 1px solid #ddd;
-  border-radius: .25rem;
-  background: #fafafa;
-  font-size: .875rem;
-}
-.turnstile-preview span { font-size: 1.5rem; }
-.turnstile-preview small { margin-left: auto; color: var(--muted); }
+#contact-form button { grid-column: 1 / -1; justify-self: start; }
+#contact-form button:disabled { opacity: .55; cursor: not-allowed; }
+#quote-status:empty, #quote-turnstile:empty { display: none; }
 @media (max-width: 760px) {
   #contact-form { grid-row: 2; }
   .contact-grid > .map { grid-row: 3; height: 18rem; }

@@ -6,7 +6,7 @@
   <title>Uncles Windows | Exterior window cleaning</title>
   <meta name="description" content="Uncles Windows provides exterior window, gutter and solar panel cleaning for Auckland homes and businesses. Call 021 026 33673 for a quote." />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="windows-hero.css?v=34" />
+  <link rel="stylesheet" href="windows-hero.css?v=35" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -76,7 +76,24 @@
 
 
     <section id="contact"><div class="wrap contact-grid"><div class="contact-info"><div><h2>Get in touch</h2></div><p class="contact-detail">Serving Auckland homes and businesses</p></div><iframe class="map" title="Auckland service area on Google Maps" src="https://www.google.com/maps?q=Auckland%2C%20New%20Zealand&amp;t=m&amp;z=11&amp;output=embed" loading="lazy" allowfullscreen></iframe>
-      <form id="contact-form" action="/contact" method="post" aria-describedby="quote-notice"><p class="eyebrow">Request a quote</p><p class="form-privacy" id="quote-notice">We’ll use your details to respond to your quote request. <a href="privacy.html">Privacy Policy</a>.</p><fieldset disabled style="display:contents"><label>Service<select id="offering" name="offering"><option value="">General enquiry</option><option value="Exterior window cleaning">Exterior window cleaning</option><option value="Gutter cleaning">Gutter cleaning</option><option value="Solar panel cleaning">Solar panel cleaning</option></select></label><label>Name<input name="name" autocomplete="name" required maxlength="120" /></label><label>Phone<input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="50" /></label><label class="form-full">Email<input id="email" name="email" type="email" autocomplete="email" maxlength="254" /></label><label>Message<textarea name="message" required minlength="10" maxlength="1000"></textarea></label><div id="quote-turnstile" class="form-full"></div><button class="button" type="submit" disabled>Send request</button></fieldset><p id="quote-status" class="form-status form-full" role="status">Loading the quote form…</p><noscript>Please enable JavaScript or call <a href="tel:+642102633673">021 026 33673</a>.</noscript></form>
+      <form id="contact-form" action="/contact" method="post" aria-labelledby="quote-title" aria-describedby="quote-intro quote-notice">
+        <div class="form-full quote-intro">
+          <h3 id="quote-title">Get a cleaning quote</h3>
+          <p id="quote-intro">Tell us what needs cleaning and which Auckland suburb you’re in. Leave a phone number or email so we can get back to you with a quote.</p>
+        </div>
+        <fieldset disabled style="display:contents">
+          <label class="form-full">Service<select id="offering" name="offering"><option value="">Not sure or more than one service</option><option value="Exterior window cleaning">Exterior window cleaning</option><option value="Gutter cleaning">Gutter cleaning</option><option value="Solar panel cleaning">Solar panel cleaning</option></select></label>
+          <label>Name<input name="name" autocomplete="name" required maxlength="120"></label>
+          <label>Phone<input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="50"></label>
+          <label class="form-full">Email<input id="email" name="email" type="email" autocomplete="email" maxlength="254"></label>
+          <label class="form-full">What needs cleaning?<textarea name="message" placeholder="e.g. Exterior windows and gutters on a two-storey home in Mt Eden" required minlength="10" maxlength="1000"></textarea></label>
+          <div id="quote-turnstile" class="form-full"></div>
+          <p class="form-privacy form-full" id="quote-notice">We’ll use your details to respond to your request. <a href="privacy.html">Privacy Policy</a>.</p>
+          <button class="button" type="submit" disabled>Request a quote</button>
+        </fieldset>
+        <p id="quote-status" class="form-status form-full" role="status">Loading the quote form…</p>
+        <noscript>Please enable JavaScript or call <a href="tel:+642102633673">021 026 33673</a>.</noscript>
+      </form>
       <a class="contact-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Auckland%2C%20New%20Zealand">Open Auckland in Google Maps</a>
     </div></section>
   </main>
