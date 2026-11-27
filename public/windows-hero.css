@@ -1,0 +1,172 @@
+:root { --accent: #000; }
+
+#main { position: relative; }
+.call-pointer {
+  position: absolute;
+  inset: calc(-.75rem + 20px) 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 3.4rem;
+  pointer-events: none;
+}
+.call-pointer-note { pointer-events: auto; }
+.call-pointer-note {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: .3rem;
+  color: #a13825;
+  font: italic 750 1.2rem/1 'Segoe Print', 'Comic Sans MS', cursive;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.call-pointer-note span { transform: rotate(-12deg); transform-origin: right center; }
+.call-pointer-note:hover { text-decoration: underline; }
+.nav-shell .mobile-call { display: none; }
+@media (max-width: 760px) {
+  .nav-shell .mobile-call { display: inline-flex; white-space: nowrap; padding-inline: .8rem; }
+  .call-pointer { inset-block-start: 3px; padding-right: 1rem; }
+  .call-pointer-note { flex-direction: row-reverse; font-size: .8rem; }
+  .call-pointer-note span { transform: rotate(12deg); transform-origin: left center; }
+  .call-pointer-note svg { width: 1.65rem; height: 1.8rem; transform: scaleX(-1); }
+}
+
+.hero-image.windows-hero {
+  --reveal: 50%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.windows-hero img { position: absolute; inset: 0; }
+.windows-after { clip-path: inset(0 0 0 var(--reveal)); }
+.windows-divider {
+  position: absolute;
+  inset: 0 auto 0 var(--reveal);
+  width: 2px;
+  background: white;
+  transform: translateX(-50%);
+  box-shadow: 0 0 6px #0008;
+  pointer-events: none;
+}
+.windows-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  font: 700 1.35rem/1 system-ui, sans-serif;
+}
+.windows-label {
+  position: absolute;
+  top: .75rem;
+  padding: .25rem .65rem;
+  border-radius: .5rem;
+  background: #000d;
+  color: white;
+  font: 600 .875rem/1.4 system-ui, sans-serif;
+}
+.windows-label--before { left: .75rem; }
+.windows-label--after { right: .75rem; }
+.windows-slider {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+.windows-slider:focus-visible + .windows-divider .windows-handle {
+  box-shadow: 0 0 0 2px black, 0 0 0 5px white;
+}
+
+.windows-feature { max-width: 58rem; padding: 0 0 clamp(2rem, 5vw, 4rem); }
+.windows-feature .identity-section {
+  grid-template-columns: auto minmax(0, 36rem);
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 2.75rem);
+  padding: clamp(1.75rem, 4vw, 3.25rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+  text-align: left;
+}
+@media (min-width: 761px) {
+  .windows-feature .identity-section {
+    padding-block: calc(clamp(1.75rem, 4vw, 3.25rem) + 1rem) calc(clamp(1.5rem, 3vw, 2.25rem) + 1rem);
+  }
+}
+.identity-sticker { width: clamp(6rem, 15vw, 10rem); height: auto; }
+.identity-section .identity-copy h1 { font-size: clamp(1.9rem, 4.5vw, 3.6rem); line-height: 1.05; text-wrap: balance; }
+
+@media (max-width: 580px) {
+  .windows-feature .identity-section { grid-template-columns: 1fr; gap: .65rem; text-align: center; }
+  .identity-sticker { width: 4.75rem; }
+  .identity-copy .about-copy { max-width: 32ch; margin-inline: auto; }
+}
+#contact .contact-grid { row-gap: 1.1rem; }
+.contact-info { grid-column: 1 / -1; }
+.contact-grid > .map { height: 100%; }
+#contact-form label:has(textarea) { grid-column: 1 / -1; }
+#contact-form textarea { width: 100%; }
+#contact-form .turnstile-preview, #contact-form button { grid-column: 1 / -1; justify-self: start; }
+.turnstile-preview {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  width: min(300px, 100%);
+  min-height: 65px;
+  padding: .5rem .75rem;
+  border: 1px solid #ddd;
+  border-radius: .25rem;
+  background: #fafafa;
+  font-size: .875rem;
+}
+.turnstile-preview span { font-size: 1.5rem; }
+.turnstile-preview small { margin-left: auto; color: var(--muted); }
+@media (max-width: 760px) {
+  #contact-form { grid-row: 2; }
+  .contact-grid > .map { grid-row: 3; height: 18rem; }
+  .contact-map-link { grid-row: 4; }
+}
+.service-card img.service-image { height: auto; aspect-ratio: 1; }
+.site-legal-footer { padding-top: 0; }
+.site-legal-footer .copyright { margin-top: 0; }
+#reviews { padding: 0; }
+#reviews > .google-rating { border-top: 0; text-align: center; }
+.google-rating a {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem .65rem;
+  min-height: 44px;
+  padding: .5rem .85rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+  font-size: .875rem;
+}
+.google-rating-stars { color: #915b00; letter-spacing: .08em; white-space: nowrap; }
+.customer-reviews .review-marquee { overflow-x: auto; mask-image: none; scroll-snap-type: x proximity; }
+.customer-reviews .review-list { animation: none; }
+.customer-reviews .review { width: min(19.4rem, 80vw); scroll-snap-align: start; }
+.review-copy { display: none; }
+@media (max-width: 760px) {
+  .identity-sticker { position: relative; }
+  .customer-reviews .review { width: min(16.5rem, 64vw); min-height: 0; padding: .9rem; gap: .65rem; font-size: .875rem; scroll-snap-align: center; }
+  .customer-reviews .review-title { font-size: .68rem; gap: .35rem; }
+  #services .service-card { min-height: 0; padding: .8rem; gap: .75rem; }
+  #services .service-card h3 { font-size: 1.15rem; }
+  #services .service-card p { font-size: .875rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .customer-reviews.is-looping .review-marquee:not(:focus-within) { overflow: clip; }
+  .customer-reviews.is-looping .review-marquee:not(:focus-within) .review-list { animation: scroll-reviews 36s linear infinite; }
+  .customer-reviews.is-looping .review-marquee:not(:focus-within) .review-copy { display: flex; }
+  .customer-reviews.is-looping .review-marquee:hover .review-list { animation-play-state: paused; }
+}

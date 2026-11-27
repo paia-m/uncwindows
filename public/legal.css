@@ -1,0 +1,4 @@
+.legal { max-width: 42rem; padding-block: clamp(2rem, 6vw, 4rem); }
+.legal h1 { margin: 1.25rem 0 1rem; font-size: clamp(2.4rem, 6vw, 3.75rem); }
+.legal h2 { margin: 1.75rem 0 .4rem; font-size: 1.35rem; }
+.legal a { text-decoration: underline; text-underline-offset: .15em; }
