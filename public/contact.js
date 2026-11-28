@@ -2,6 +2,14 @@ const form = document.querySelector('#contact-form');
 const status = document.querySelector('#quote-status');
 const button = form.querySelector('button');
 const offering = form.elements.offering;
+const { phone, email } = form.elements;
+const contactError = document.querySelector('#contact-method-error');
+
+for (const field of [phone, email]) {
+  field.addEventListener('input', () => {
+    if (phone.value.trim() || email.value.trim()) contactError.textContent = '';
+  });
+}
 let widget;
 let busy = false;
 
@@ -17,9 +25,9 @@ form.addEventListener('submit', async event => {
     form.elements.name.focus();
     return;
   }
-  if (!form.elements.email.value.trim() && !form.elements.phone.value.trim()) {
-    status.textContent = 'Enter a phone number or email address so we can reply.';
-    form.elements.phone.focus();
+  if (!email.value.trim() && !phone.value.trim()) {
+    contactError.textContent = 'Please enter a phone number or an email address so we can reply.';
+    phone.focus();
     return;
   }
 

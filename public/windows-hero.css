@@ -121,7 +121,9 @@ body { --footer-divider-gap: 1.5rem; }
 #contact-form textarea { width: 100%; }
 #contact-form button { grid-column: 1 / -1; justify-self: center; }
 #contact-form button:disabled { opacity: .55; cursor: not-allowed; }
-#quote-status:empty, #quote-turnstile:empty { display: none; }
+#quote-status:empty, #quote-turnstile:empty, #contact-method-error:empty { display: none; }
+.required-mark, #contact-method-error { color: #aa2612; }
+#contact-method-error { margin: 0; font-size: .85rem; }
 @media (max-width: 760px) {
   #contact-form { grid-row: 2; }
   .contact-grid > .map { grid-row: 3; height: 18rem; }
