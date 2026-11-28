@@ -1,27 +1,6 @@
 :root { --accent: #000; }
 
 .site-header { padding-top: clamp(2.25rem, 5vw, 3rem); }
-#main { position: relative; }
-.call-pointer {
-  position: absolute;
-  inset: calc(-.75rem + 20px) 0 auto;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 3.4rem;
-  pointer-events: none;
-}
-.call-pointer-note { pointer-events: auto; }
-.call-pointer-note {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: .3rem;
-  color: #a13825;
-  font: italic 750 1.2rem/1 'Segoe Print', 'Comic Sans MS', cursive;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.call-pointer-note span { transform: rotate(-12deg); transform-origin: right center; }
-.call-pointer-note:hover { text-decoration: underline; }
 .hero-phone { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: 1rem; }
 .nav-shell .nav-phone {
   position: relative;
@@ -42,12 +21,6 @@
 @media (prefers-reduced-motion: reduce) {
   .nav-shell .nav-phone, .nav-phone-icon, .nav-phone-number { transition: none; }
 }
-.nav-shell .mobile-call { display: none; }
-@media (max-width: 760px) {
-  .nav-shell .mobile-call { display: inline-flex; }
-  .call-pointer { display: none; }
-}
-
 .hero-image.windows-hero {
   --reveal: 50%;
   height: auto;
@@ -106,21 +79,21 @@
 
 .windows-feature { max-width: 58rem; padding: 0 0 clamp(2rem, 5vw, 4rem); }
 .windows-feature .identity-section {
-  grid-template-columns: auto minmax(0, 36rem);
+  grid-template-columns: minmax(0, 44rem);
   justify-content: center;
   align-items: center;
-  gap: clamp(1rem, 4vw, 2.75rem);
+  gap: .85rem;
   padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4.5rem);
-  text-align: left;
+  text-align: center;
 }
 .identity-sticker { width: clamp(6rem, 15vw, 10rem); height: auto; }
 .identity-section .identity-copy h1 { font-size: clamp(1.9rem, 4.5vw, 3.6rem); line-height: 1.05; text-wrap: balance; }
 
+.hero-phone { justify-content: center; }
+.identity-copy .about-copy { margin-inline: auto; }
 @media (max-width: 580px) {
-  .windows-feature .identity-section { grid-template-columns: 1fr; gap: .65rem; text-align: center; }
   .identity-sticker { width: 7rem; }
-  .hero-phone { justify-content: center; }
-  .identity-copy .about-copy { max-width: 32ch; margin-inline: auto; }
+  .identity-copy .about-copy { max-width: 32ch; }
 }
 #contact .contact-grid { row-gap: 1.1rem; }
 .contact-info { grid-column: 1 / -1; }
@@ -177,7 +150,6 @@
 .customer-reviews .review { width: min(19.4rem, 80vw); scroll-snap-align: start; }
 .review-copy { display: none; }
 @media (max-width: 760px) {
-  .identity-sticker { position: relative; }
   .customer-reviews .review { width: min(16.5rem, 64vw); min-height: 0; padding: .9rem; gap: .65rem; font-size: .875rem; scroll-snap-align: center; }
   .customer-reviews .review-title { font-size: .68rem; gap: .35rem; }
   #services .service-card { min-height: 0; padding: .8rem; gap: .75rem; }

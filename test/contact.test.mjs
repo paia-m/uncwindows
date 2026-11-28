@@ -4,7 +4,7 @@ import { onRequestGet, onRequestPost } from '../functions/contact.js';
 
 const host = 'uncwindows.connectar.co.nz';
 const origin = `https://${host}`;
-const env = { CONTACT_HOSTNAME: host, TURNSTILE_SITE_KEY: 'sample-site', TURNSTILE_SECRET_KEY: 'sample-secret', RESEND_API_KEY: 'sample-key', FROM_EMAIL: 'sender@example.test', CONTACT_TO_EMAIL: 'operator@example.test' };
+const env = { CONTACT_HOSTNAME: host, TURNSTILE_SITE_KEY: 'sample-site', TURNSTILE_SECRET_KEY: 'sample-secret', RESEND_API_KEY: 'sample-key', FROM_EMAIL: 'sender@example.test', CONTACT_TO_EMAIL: 'operator@example.test', CONTACT_BCC_EMAIL: 'copy@example.test' };
 const fields = { name: 'Sample', email: 'customer@example.test', offering: 'Gutter cleaning', message: 'Could you quote on my gutters?', 'cf-turnstile-response': 'sample-token' };
 function send(data = fields, source = origin, config = env) {
   return onRequestPost({ env: config, request: new Request(`${origin}/contact`, { method: 'POST', headers: { Origin: source }, body: new URLSearchParams(data) }) });
@@ -18,6 +18,7 @@ test('only the configured hostname exposes a site key', async () => {
 
 test('rejects a foreign origin, invalid fields, missing challenge and oversized request', async () => {
   assert.equal((await send(fields, 'https://elsewhere.example')).status, 403);
+  assert.equal((await send({ ...fields, name: '  ' })).status, 422);
   assert.equal((await send({ ...fields, email: '' })).status, 422);
   assert.equal((await send({ ...fields, offering: 'Other' })).status, 422);
   assert.equal((await send({ ...fields, 'cf-turnstile-response': '' })).status, 403);
@@ -40,12 +41,16 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   check.hostname = host;
   assert.deepEqual(await (await send({ ...fields, message: '<b>Sample</b>\nSecond line', to: 'wrong@example.test' })).json(), { ok: true });
   assert.deepEqual(messages[0].to, [env.CONTACT_TO_EMAIL]);
+  assert.deepEqual(messages[0].bcc, [env.CONTACT_BCC_EMAIL]);
   assert.equal(messages[0].reply_to, fields.email);
   assert.equal(messages[0].subject, 'Uncles Windows | Gutter cleaning');
   assert.match(messages[0].text, /Request Type: Gutter cleaning/);
   assert.match(messages[0].html, /email-starburst\.png/);
   assert.match(messages[0].html, /Customer Message/);
   assert.match(messages[0].html, /&lt;b&gt;Sample&lt;\/b&gt;<br>Second line/);
+  assert.equal((await send({ ...fields, email: '', phone: '021 111 2222', message: '' })).status, 200);
+  assert.equal(messages[1].reply_to, undefined);
+  assert.match(messages[1].text, /No message provided/);
   delivery = 429;
   assert.equal((await send()).status, 502);
 });

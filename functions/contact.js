@@ -46,7 +46,7 @@ export async function onRequestPost({ request, env }) {
   const field = key => (fields.get(key) || '').trim();
   const name = field('name'), email = field('email'), phone = field('phone'), offering = field('offering'), message = field('message');
   const token = field('cf-turnstile-response');
-  if (!name || name.length > 120 || message.length < 10 || message.length > 1000 || (!email && !phone) ||
+  if (!name || name.length > 120 || message.length > 1000 || (!email && !phone) ||
       (offering && !services.has(offering)) || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) ||
       (phone && (!/^[\d+().\s-]{6,50}$/.test(phone) || phone.replace(/\D/g, '').length < 6))) {
     return json({ error: 'Check your name, contact details, service and message.' }, 422);
@@ -65,13 +65,14 @@ export async function onRequestPost({ request, env }) {
     }
 
     const requestType = offering || 'General Enquiry';
+    const customerMessage = message || 'No message provided.';
     const subject = `Uncles Windows | ${requestType}`;
-    const text = `Uncles Windows · Auckland\n\nRequest Type: ${requestType}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\nCustomer Message\n${message}`;
-    const html = quoteEmail({ requestType, name, email, phone, message });
+    const text = `Uncles Windows · Auckland\n\nRequest Type: ${requestType}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\nCustomer Message\n${customerMessage}`;
+    const html = quoteEmail({ requestType, name, email, phone, message: customerMessage });
     stage = 'Resend';
     const sent = await fetch('https://api.resend.com/emails', {
       method: 'POST', headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'User-Agent': 'UnclesWindows/1.0' },
-      body: JSON.stringify({ from: env.FROM_EMAIL, to: [env.CONTACT_TO_EMAIL], ...(email ? { reply_to: email } : {}), subject, text, html }),
+      body: JSON.stringify({ from: env.FROM_EMAIL, to: [env.CONTACT_TO_EMAIL], ...(env.CONTACT_BCC_EMAIL ? { bcc: [env.CONTACT_BCC_EMAIL] } : {}), ...(email ? { reply_to: email } : {}), subject, text, html }),
       signal: AbortSignal.timeout(8000),
     });
     if (!sent.ok) throw new Error(`HTTP ${sent.status}`);

@@ -15,9 +15,10 @@ Static site with one Cloudflare Pages Function (`/contact`). No separate Workers
 | `TURNSTILE_SECRET_KEY` | Widget secret (encrypted) |
 | `RESEND_API_KEY` | Sending-only Resend key (encrypted) |
 | `FROM_EMAIL` | Resend-verified sender, e.g. `Uncles Windows <enquiries@connectar.co.nz>` if verified |
-| `CONTACT_TO_EMAIL` | The confirmed operator inbox (encrypted) |
+| `CONTACT_TO_EMAIL` | The confirmed business inbox (encrypted) |
+| `CONTACT_BCC_EMAIL` | Optional copy to the operator inbox (encrypted) |
 
-The form sends directly to that one configured inbox, with the visitor’s email as Reply-To when provided. It does not configure Cloudflare Email Routing, send customer auto-replies, or write to Glide. Confirm this interim email-only route and the privacy notice with the operator before taking live enquiries.
+The form sends to the configured business inbox, optionally BCCs the operator inbox, and sets the visitor’s email as Reply-To when provided. It does not configure Cloudflare Email Routing, send customer auto-replies, or write to Glide. Confirm this interim email-only route and the privacy notice with the operator before taking live enquiries.
 
 Run `node --test` for the mocked endpoint tests. Before announcing the site, submit one sample request from the live hostname and confirm the email arrives in the correct inbox; then verify the reply address and that an invalid challenge does not send. Test data only. If available on the zone, add a rate-limiting rule for `POST /contact` and review submissions in Resend during rollout.
 

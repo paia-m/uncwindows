@@ -12,6 +12,11 @@ for (const link of document.querySelectorAll('.service-cta[data-offering]')) {
 form.addEventListener('submit', async event => {
   event.preventDefault();
   if (busy || button.disabled) return;
+  if (!form.elements.name.value.trim()) {
+    status.textContent = 'Enter your name.';
+    form.elements.name.focus();
+    return;
+  }
   if (!form.elements.email.value.trim() && !form.elements.phone.value.trim()) {
     status.textContent = 'Enter a phone number or email address so we can reply.';
     form.elements.phone.focus();
