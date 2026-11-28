@@ -46,7 +46,7 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   assert.deepEqual(messages[0].to, [env.CONTACT_TO_EMAIL]);
   assert.deepEqual(messages[0].bcc, [env.CONTACT_BCC_EMAIL]);
   assert.equal(messages[0].reply_to, fields.email);
-  assert.equal(messages[0].subject, 'Uncles Windows | Gutter cleaning');
+  assert.equal(messages[0].subject, 'Uncles Windows | Gutter cleaning | Sample');
   assert.match(messages[0].text, /Request Type: Gutter cleaning/);
   assert.match(messages[0].html, /Request Type:<\/strong> Gutter cleaning<br>/);
   assert.match(messages[0].html, /email-starburst\.png/);

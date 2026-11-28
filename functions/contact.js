@@ -69,7 +69,7 @@ export async function onRequestPost({ request, env }) {
 
     const requestType = offering || 'General Enquiry';
     const customerMessage = message || 'No message provided.';
-    const subject = `Uncles Windows | ${requestType}`;
+    const subject = `Uncles Windows | ${requestType} | ${name.replace(/\s+/g, ' ')}`;
     const text = `Uncles Windows · Auckland\n\nRequest Type: ${requestType}\nProperty height: ${storeys || 'Not provided'}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\nCustomer Message\n${customerMessage}`;
     const html = quoteEmail({ requestType, storeys, name, email, phone, message: customerMessage });
     stage = 'Resend';
