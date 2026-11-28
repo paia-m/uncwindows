@@ -100,7 +100,9 @@
   text-align: center;
 }
 .identity-sticker { width: clamp(6rem, 15vw, 10rem); height: auto; }
-.identity-section .identity-copy h1 { font-size: clamp(1.9rem, 4.5vw, 3.6rem); line-height: 1.05; text-wrap: balance; }
+.identity-copy { width: 100%; container-type: inline-size; }
+.identity-section .identity-copy h1 { font-size: min(4.8cqi, 2.1rem); line-height: 1.15; }
+.identity-copy h1 span { display: block; white-space: nowrap; }
 
 .hero-phone { justify-content: center; }
 .identity-copy .about-copy { margin-inline: auto; }
