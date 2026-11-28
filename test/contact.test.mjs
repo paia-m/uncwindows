@@ -21,6 +21,7 @@ test('rejects a foreign origin, invalid fields, missing challenge and oversized 
   assert.equal((await send({ ...fields, name: '  ' })).status, 422);
   assert.equal((await send({ ...fields, email: '' })).status, 422);
   assert.equal((await send({ ...fields, offering: 'Other' })).status, 422);
+  assert.equal((await send({ ...fields, storeys: '12' })).status, 422);
   assert.equal((await send({ ...fields, 'cf-turnstile-response': '' })).status, 403);
   assert.equal((await send({ ...fields, message: 'x'.repeat(13000) })).status, 413);
 });
@@ -39,7 +40,7 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   assert.equal((await send()).status, 403);
   assert.equal(messages.length, 0);
   check.hostname = host;
-  assert.deepEqual(await (await send({ ...fields, message: '<b>Sample</b>\nSecond line', to: 'wrong@example.test' })).json(), { ok: true });
+  assert.deepEqual(await (await send({ ...fields, message: '<b>Sample</b>\nSecond line', storeys: '2 Storey', to: 'wrong@example.test' })).json(), { ok: true });
   assert.deepEqual(messages[0].to, [env.CONTACT_TO_EMAIL]);
   assert.deepEqual(messages[0].bcc, [env.CONTACT_BCC_EMAIL]);
   assert.equal(messages[0].reply_to, fields.email);
@@ -47,6 +48,8 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   assert.match(messages[0].text, /Request Type: Gutter cleaning/);
   assert.match(messages[0].html, /email-starburst\.png/);
   assert.match(messages[0].html, /Customer Message/);
+  assert.match(messages[0].text, /Property height: 2 Storey/);
+  assert.match(messages[0].html, /Property height:<\/strong> 2 Storey/);
   assert.match(messages[0].html, /&lt;b&gt;Sample&lt;\/b&gt;<br>Second line/);
   assert.equal((await send({ ...fields, email: '', phone: '021 111 2222', message: '' })).status, 200);
   assert.equal(messages[1].reply_to, undefined);

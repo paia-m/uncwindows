@@ -10,16 +10,7 @@ slider.addEventListener('input', reveal);
 reveal();
 slider.hidden = false;
 
-const reviews = document.querySelector('.customer-reviews');
-const reviewTrack = reviews.querySelector('.review-list');
-const reviewCopy = reviewTrack.firstElementChild.cloneNode(true);
-reviewCopy.classList.add('review-copy');
-reviewCopy.inert = true;
-reviewCopy.setAttribute('aria-hidden', 'true');
-reviewTrack.append(reviewCopy);
-reviews.classList.add('is-looping');
-
-const heroPhone = document.querySelector('#hero-phone .button');
+const heroPhone = document.querySelector('#hero-phone a[href^="tel:"]');
 const stickyHeader = document.querySelector('.site-header');
 let phoneObserver;
 function watchHeroPhone() {

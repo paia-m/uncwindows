@@ -1,4 +1,5 @@
 const services = new Set(['Exterior window cleaning', 'Gutter cleaning', 'Solar panel cleaning']);
+const propertyHeights = new Set(['1 Storey', '2 Storey', '3+ Storey']);
 const MAX_BYTES = 12_000;
 
 function json(data, status = 200) {
@@ -45,9 +46,10 @@ export async function onRequestPost({ request, env }) {
   }
   const field = key => (fields.get(key) || '').trim();
   const name = field('name'), email = field('email'), phone = field('phone'), offering = field('offering'), message = field('message');
+  const storeys = field('storeys');
   const token = field('cf-turnstile-response');
   if (!name || name.length > 120 || message.length > 1000 || (!email && !phone) ||
-      (offering && !services.has(offering)) || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) ||
+      (offering && !services.has(offering)) || (storeys && !propertyHeights.has(storeys)) || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) ||
       (phone && (!/^[\d+().\s-]{6,50}$/.test(phone) || phone.replace(/\D/g, '').length < 6))) {
     return json({ error: 'Check your name, contact details, service and message.' }, 422);
   }
@@ -67,8 +69,8 @@ export async function onRequestPost({ request, env }) {
     const requestType = offering || 'General Enquiry';
     const customerMessage = message || 'No message provided.';
     const subject = `Uncles Windows | ${requestType}`;
-    const text = `Uncles Windows · Auckland\n\nRequest Type: ${requestType}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\nCustomer Message\n${customerMessage}`;
-    const html = quoteEmail({ requestType, name, email, phone, message: customerMessage });
+    const text = `Uncles Windows · Auckland\n\nRequest Type: ${requestType}\nProperty height: ${storeys || 'Not provided'}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\nCustomer Message\n${customerMessage}`;
+    const html = quoteEmail({ requestType, storeys, name, email, phone, message: customerMessage });
     stage = 'Resend';
     const sent = await fetch('https://api.resend.com/emails', {
       method: 'POST', headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'User-Agent': 'UnclesWindows/1.0' },
@@ -87,7 +89,7 @@ function escapeHtml(value) {
   return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 }
 
-function quoteEmail({ requestType, name, email, phone, message }) {
+function quoteEmail({ requestType, storeys, name, email, phone, message }) {
   return `<div style="background:#f4f2ee;padding:24px 12px;color:#171d24;font:16px/1.5 Arial,sans-serif">
   <div style="max-width:560px;margin:auto;background:#fff;border-radius:16px;padding:24px">
     <div style="text-align:center;border-bottom:1px solid #ddd;padding-bottom:20px">
@@ -96,7 +98,7 @@ function quoteEmail({ requestType, name, email, phone, message }) {
       <div style="color:#595959">Auckland · Website enquiry</div>
     </div>
     <h2 style="font-size:17px;margin:20px 0 4px">Request Type</h2>
-    <p style="margin:0 0 16px">${escapeHtml(requestType)}</p>
+    <p style="margin:0 0 16px">${escapeHtml(requestType)}<br><strong>Property height:</strong> ${escapeHtml(storeys || 'Not provided')}</p>
     <h2 style="font-size:17px;margin:0 0 4px">Contact Details</h2>
     <p style="margin:0 0 20px"><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email || 'Not provided')}<br><strong>Phone:</strong> ${escapeHtml(phone || 'Not provided')}</p>
     <div style="background:#f4f2ee;border-radius:10px;padding:16px;overflow-wrap:anywhere">
