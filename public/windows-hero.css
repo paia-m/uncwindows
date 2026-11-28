@@ -1,6 +1,8 @@
 :root { --accent: #000; }
 
 .site-header { padding-top: clamp(2.25rem, 5vw, 3rem); }
+.nav-shell .brand { display: inline-flex; align-items: center; gap: .45rem; }
+.nav-shell .brand img { flex: none; }
 .hero-phone { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: 1rem; }
 .nav-shell .nav-phone {
   position: relative;
@@ -11,11 +13,11 @@
   overflow: hidden;
   flex-shrink: 0;
   white-space: nowrap;
-  transition: width .25s ease;
+  transition: width .25s ease, background-color .25s ease;
 }
 .nav-phone-icon { position: absolute; opacity: 0; }
 .nav-phone-icon, .nav-phone-number { transition: opacity .15s ease; }
-.hero-phone-visible .nav-shell .nav-phone { width: 44px; }
+.hero-phone-visible .nav-shell .nav-phone { width: 44px; background: #555; }
 .hero-phone-visible .nav-phone-icon { opacity: 1; }
 .hero-phone-visible .nav-phone-number { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
@@ -83,7 +85,7 @@
   justify-content: center;
   align-items: center;
   gap: .85rem;
-  padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4.5rem);
+  padding: clamp(3rem, 5vw, 4.5rem) 0;
   text-align: center;
 }
 .identity-sticker { width: clamp(6rem, 15vw, 10rem); height: auto; }
