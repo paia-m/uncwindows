@@ -98,8 +98,7 @@ function quoteEmail({ requestType, storeys, name, email, phone, message }) {
       <div style="font-size:22px;font-weight:bold">Uncles Windows</div>
       <div style="color:#595959">Auckland · Website enquiry</div>
     </div>
-    <h2 style="font-size:17px;margin:20px 0 4px">Request Type</h2>
-    <p style="margin:0 0 16px">${escapeHtml(requestType)}<br><strong>Property height:</strong> ${escapeHtml(storeys || 'Not provided')}</p>
+    <p style="margin:20px 0 16px"><strong>Request Type:</strong> ${escapeHtml(requestType)}<br><strong>Property height:</strong> ${escapeHtml(storeys || 'Not provided')}</p>
     <h2 style="font-size:17px;margin:0 0 4px">Contact Details</h2>
     <p style="margin:0 0 20px"><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email || 'Not provided')}<br><strong>Phone:</strong> ${escapeHtml(phone || 'Not provided')}</p>
     <div style="background:#f4f2ee;border-radius:10px;padding:16px;overflow-wrap:anywhere">

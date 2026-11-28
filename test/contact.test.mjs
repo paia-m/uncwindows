@@ -48,6 +48,7 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   assert.equal(messages[0].reply_to, fields.email);
   assert.equal(messages[0].subject, 'Uncles Windows | Gutter cleaning');
   assert.match(messages[0].text, /Request Type: Gutter cleaning/);
+  assert.match(messages[0].html, /Request Type:<\/strong> Gutter cleaning<br>/);
   assert.match(messages[0].html, /email-starburst\.png/);
   assert.match(messages[0].html, /Customer Message/);
   assert.match(messages[0].text, /Property height: 2 Storey/);
