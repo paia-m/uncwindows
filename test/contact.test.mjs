@@ -38,10 +38,14 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
   assert.equal((await send()).status, 403);
   assert.equal(messages.length, 0);
   check.hostname = host;
-  assert.deepEqual(await (await send({ ...fields, to: 'wrong@example.test' })).json(), { ok: true });
+  assert.deepEqual(await (await send({ ...fields, message: '<b>Sample</b>\nSecond line', to: 'wrong@example.test' })).json(), { ok: true });
   assert.deepEqual(messages[0].to, [env.CONTACT_TO_EMAIL]);
   assert.equal(messages[0].reply_to, fields.email);
-  assert.match(messages[0].text, /Gutter cleaning/);
+  assert.equal(messages[0].subject, 'Uncles Windows | Gutter cleaning');
+  assert.match(messages[0].text, /Request Type: Gutter cleaning/);
+  assert.match(messages[0].html, /email-starburst\.png/);
+  assert.match(messages[0].html, /Customer Message/);
+  assert.match(messages[0].html, /&lt;b&gt;Sample&lt;\/b&gt;<br>Second line/);
   delivery = 429;
   assert.equal((await send()).status, 502);
 });
