@@ -18,3 +18,16 @@ reviewCopy.inert = true;
 reviewCopy.setAttribute('aria-hidden', 'true');
 reviewTrack.append(reviewCopy);
 reviews.classList.add('is-looping');
+
+const heroPhone = document.querySelector('#hero-phone .button');
+const stickyHeader = document.querySelector('.site-header');
+let phoneObserver;
+function watchHeroPhone() {
+  phoneObserver?.disconnect();
+  phoneObserver = new IntersectionObserver(([entry]) => {
+    document.documentElement.classList.toggle('hero-phone-visible', entry.isIntersecting && entry.intersectionRatio >= .5);
+  }, { rootMargin: `-${stickyHeader.offsetHeight}px 0px 0px`, threshold: .5 });
+  phoneObserver.observe(heroPhone);
+}
+watchHeroPhone();
+new ResizeObserver(watchHeroPhone).observe(stickyHeader);
