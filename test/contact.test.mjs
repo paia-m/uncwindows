@@ -2,16 +2,18 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { onRequestGet, onRequestPost } from '../functions/contact.js';
 
-const host = 'uncwindows.connectar.co.nz';
+const host = 'uncleswindows.co.nz';
+const oldHost = 'uncleswindows.connectar.co.nz';
 const origin = `https://${host}`;
-const env = { CONTACT_HOSTNAME: host, TURNSTILE_SITE_KEY: 'sample-site', TURNSTILE_SECRET_KEY: 'sample-secret', RESEND_API_KEY: 'sample-key', FROM_EMAIL: 'sender@example.test', CONTACT_TO_EMAIL: 'operator@example.test', CONTACT_BCC_EMAIL: 'copy@example.test' };
+const env = { CONTACT_HOSTNAME: `${host}, ${oldHost}`, TURNSTILE_SITE_KEY: 'sample-site', TURNSTILE_SECRET_KEY: 'sample-secret', RESEND_API_KEY: 'sample-key', FROM_EMAIL: 'sender@example.test', CONTACT_TO_EMAIL: 'operator@example.test', CONTACT_BCC_EMAIL: 'copy@example.test' };
 const fields = { name: 'Sample', email: 'customer@example.test', offering: 'Gutter cleaning', message: 'Could you quote on my gutters?', 'cf-turnstile-response': 'sample-token' };
 function send(data = fields, source = origin, config = env) {
   return onRequestPost({ env: config, request: new Request(`${origin}/contact`, { method: 'POST', headers: { Origin: source }, body: new URLSearchParams(data) }) });
 }
 
-test('only the configured hostname exposes a site key', async () => {
+test('only configured hostnames expose a site key', async () => {
   assert.deepEqual(await onRequestGet({ env, request: new Request(`${origin}/contact`) }).json(), { siteKey: 'sample-site' });
+  assert.equal(onRequestGet({ env, request: new Request(`https://${oldHost}/contact`) }).status, 200);
   assert.equal(onRequestGet({ env, request: new Request('https://preview.pages.dev/contact') }).status, 503);
   assert.equal((await send(fields, origin, { ...env, CONTACT_TO_EMAIL: '' })).status, 503);
 });
@@ -36,7 +38,7 @@ test('verifies the challenge, fixes the recipient, and reports provider failure 
     messages.push(JSON.parse(init.body));
     return new Response('', { status: delivery });
   });
-  check.hostname = 'elsewhere.example';
+  check.hostname = oldHost;
   assert.equal((await send()).status, 403);
   assert.equal(messages.length, 0);
   check.hostname = host;

@@ -7,7 +7,8 @@ function json(data, status = 200) {
 }
 
 function configured(env, url) {
-  return url.hostname === env.CONTACT_HOSTNAME && Boolean(env.TURNSTILE_SITE_KEY && env.TURNSTILE_SECRET_KEY && env.RESEND_API_KEY && env.FROM_EMAIL && env.CONTACT_TO_EMAIL);
+  const allowedHosts = (env.CONTACT_HOSTNAME || '').split(',').map(host => host.trim());
+  return allowedHosts.includes(url.hostname) && Boolean(env.TURNSTILE_SITE_KEY && env.TURNSTILE_SECRET_KEY && env.RESEND_API_KEY && env.FROM_EMAIL && env.CONTACT_TO_EMAIL);
 }
 
 export function onRequestGet({ request, env }) {

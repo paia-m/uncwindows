@@ -5,12 +5,12 @@ Static site with one Cloudflare Pages Function (`/contact`). No separate Workers
 ## Deploy
 
 1. In Cloudflare **Workers & Pages**, create a **Pages** project and connect this GitHub repo. Use the `main` branch, no framework, a blank build command, and `public` as the build output directory. Leave the root directory at the repository root so Pages detects `functions/`.
-2. Decide the live hostname. Add `uncleswindows.connectar.co.nz` in the Pages **Custom domains** tab before configuring DNS. The site can deploy first: the quote form stays off unless the current hostname exactly matches `CONTACT_HOSTNAME` and all form settings are present. Keep preview environment secrets unset.
+2. Decide the live hostname. Add `uncleswindows.co.nz` in the Pages **Custom domains** tab before configuring DNS. The site can deploy first: the quote form stays off unless the current hostname exactly matches an entry in `CONTACT_HOSTNAME` and all form settings are present. Keep preview environment secrets unset.
 3. Create a **Managed** Turnstile widget authorised for the live hostname, and configure these **production** Pages variables/secrets. Redeploy after setting them.
 
 | Name | Value |
 | --- | --- |
-| `CONTACT_HOSTNAME` | `uncleswindows.connectar.co.nz` (hostname only) |
+| `CONTACT_HOSTNAME` | `uncleswindows.co.nz,uncleswindows.connectar.co.nz` (comma-separated exact hostnames) |
 | `TURNSTILE_SITE_KEY` | Public key of that widget |
 | `TURNSTILE_SECRET_KEY` | Widget secret (encrypted) |
 | `RESEND_API_KEY` | Sending-only Resend key (encrypted) |
