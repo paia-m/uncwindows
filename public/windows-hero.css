@@ -9,6 +9,7 @@
 @media (max-width: 360px) {
   .nav-shell { padding-inline: .65rem; gap: .5rem; }
   .nav-shell .brand { font-size: .875rem; }
+  .nav-shell .brand img { width: 22px; height: 22px; }
 }
 .hero-phone { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: 1rem; }
 .nav-shell .nav-phone {
@@ -21,6 +22,9 @@
   flex-shrink: 0;
   white-space: nowrap;
   transition: width .25s ease, background-color .25s ease;
+}
+@media (max-width: 360px) {
+  .nav-shell .nav-phone { width: 7.5rem; }
 }
 .nav-phone-icon { position: absolute; opacity: 0; }
 .nav-phone-icon, .nav-phone-number { transition: opacity .15s ease; }
