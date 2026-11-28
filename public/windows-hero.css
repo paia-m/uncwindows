@@ -1,6 +1,8 @@
 :root { --accent: #000; }
 
+.site-header { padding-top: 1.5rem; }
 #main { position: relative; }
+#main .windows-feature .identity-section { padding-top: clamp(2.75rem, 6vw, 4.75rem); }
 .call-pointer {
   position: absolute;
   inset: calc(-.75rem + 20px) 0 auto;
@@ -24,10 +26,8 @@
 .nav-shell .mobile-call { display: none; }
 @media (max-width: 760px) {
   .nav-shell .mobile-call { display: inline-flex; white-space: nowrap; padding-inline: .8rem; }
-  .call-pointer { inset-block-start: 3px; padding-right: 1rem; }
-  .call-pointer-note { flex-direction: row-reverse; font-size: .8rem; }
-  .call-pointer-note span { transform: rotate(12deg); transform-origin: left center; }
-  .call-pointer-note svg { width: 1.65rem; height: 1.8rem; transform: scaleX(-1); }
+  .call-pointer { inset-block-start: 3px; padding-right: 4.25rem; }
+  .call-pointer-note svg { width: 2rem; height: 2.25rem; }
 }
 
 .hero-image.windows-hero {
@@ -144,6 +144,22 @@
 .google-rating-stars { color: #915b00; letter-spacing: .08em; white-space: nowrap; }
 .customer-reviews .review-marquee { overflow-x: auto; mask-image: none; scroll-snap-type: x proximity; }
 .customer-reviews .review-list { animation: none; }
+.review-title a { display: flex; align-items: center; gap: .45rem; }
+.review-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: #285e59;
+  color: white;
+  letter-spacing: 0;
+}
+.review:nth-child(2) .review-avatar { background: #655091; }
+.review:nth-child(3) .review-avatar { background: #a13b35; }
+.review:nth-child(4) .review-avatar { background: #285b88; }
+.review:nth-child(5) .review-avatar { background: #675223; }
 .customer-reviews .review { width: min(19.4rem, 80vw); scroll-snap-align: start; }
 .review-copy { display: none; }
 @media (max-width: 760px) {

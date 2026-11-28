@@ -53,11 +53,12 @@ export async function onRequestPost({ request, env }) {
   }
   if (!token || token.length > 2048) return json({ error: 'Please complete the security check.' }, 403);
 
+  let stage = 'Turnstile';
   try {
     const check = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST', body: new URLSearchParams({ secret: env.TURNSTILE_SECRET_KEY, response: token }), signal: AbortSignal.timeout(7000),
     });
-    if (!check.ok) throw new Error('Verification unavailable');
+    if (!check.ok) throw new Error(`HTTP ${check.status}`);
     const result = await check.json();
     if (!result.success || result.action !== 'quote' || result.hostname !== url.hostname) {
       return json({ error: 'Security check failed. Please try again.' }, 403);
@@ -65,14 +66,16 @@ export async function onRequestPost({ request, env }) {
 
     const subject = `Uncles Windows quote request: ${offering || 'General enquiry'}`;
     const text = `Uncles Windows · Auckland\n\n${subject}\nName: ${name}\nEmail: ${email || 'Not provided'}\nPhone: ${phone || 'Not provided'}\n\n${message}`;
+    stage = 'Resend';
     const sent = await fetch('https://api.resend.com/emails', {
-      method: 'POST', headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      method: 'POST', headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'User-Agent': 'UnclesWindows/1.0' },
       body: JSON.stringify({ from: env.FROM_EMAIL, to: [env.CONTACT_TO_EMAIL], ...(email ? { reply_to: email } : {}), subject, text }),
       signal: AbortSignal.timeout(8000),
     });
-    if (!sent.ok) throw new Error('Delivery provider rejected the request');
+    if (!sent.ok) throw new Error(`HTTP ${sent.status}`);
     return json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.warn('Quote submission failed', stage, /^HTTP \d{3}$/.test(error.message) ? error.message : 'request failed');
     return json({ error: 'We couldn’t confirm your request. Please try again or call 021 026 33673.' }, 502);
   }
 }
