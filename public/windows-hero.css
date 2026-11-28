@@ -3,6 +3,13 @@
 .site-header { padding-top: clamp(2.25rem, 5vw, 3rem); }
 .nav-shell .brand { display: inline-flex; align-items: center; gap: .45rem; }
 .nav-shell .brand img { flex: none; }
+@media (max-width: 760px) {
+  .nav-shell .brand { font-size: .95rem; white-space: nowrap; }
+}
+@media (max-width: 360px) {
+  .nav-shell { padding-inline: .65rem; gap: .5rem; }
+  .nav-shell .brand { font-size: .875rem; }
+}
 .hero-phone { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: 1rem; }
 .nav-shell .nav-phone {
   position: relative;
@@ -97,6 +104,8 @@
   .identity-sticker { width: 7rem; }
   .identity-copy .about-copy { max-width: 32ch; }
 }
+body { --footer-divider-gap: 1.5rem; }
+#contact { padding-bottom: var(--footer-divider-gap); }
 #contact .contact-grid { row-gap: 1.1rem; }
 .contact-info { grid-column: 1 / -1; }
 .contact-grid > .map { height: 100%; }
@@ -110,11 +119,10 @@
 @media (max-width: 760px) {
   #contact-form { grid-row: 2; }
   .contact-grid > .map { grid-row: 3; height: 18rem; }
-  .contact-map-link { grid-row: 4; }
 }
 .service-card img.service-image { height: auto; aspect-ratio: 1; }
 .site-legal-footer { padding-top: 0; }
-.site-legal-footer .copyright { margin-top: 0; }
+.site-legal-footer .copyright { margin-top: 0; padding-top: var(--footer-divider-gap); }
 #reviews { padding: 0; }
 #reviews > .google-rating { border-top: 0; text-align: center; }
 .google-rating a {
