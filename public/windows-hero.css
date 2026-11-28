@@ -123,6 +123,7 @@ body { --footer-divider-gap: 1.5rem; }
 @media (max-width: 760px) {
   #contact-form { grid-row: 2; }
   .contact-grid > .map { grid-row: 3; height: 18rem; }
+  footer.site-legal-footer { padding-bottom: 1rem; }
 }
 .service-card img.service-image { height: auto; aspect-ratio: 1; }
 .site-legal-footer { padding-top: 0; }
